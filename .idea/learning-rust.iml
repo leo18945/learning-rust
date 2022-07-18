@@ -21,6 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/ownerships2/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/structs/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/traits/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smartpointer/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/variables/target" />
       <excludeFolder url="file://$MODULE_DIR$/ownerships/target" />
@@ -40,6 +41,7 @@
       <excludeFolder url="file://$MODULE_DIR$/ownerships2/target" />
       <excludeFolder url="file://$MODULE_DIR$/modules3/target" />
       <excludeFolder url="file://$MODULE_DIR$/traits/target" />
+      <excludeFolder url="file://$MODULE_DIR$/smartpointer/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

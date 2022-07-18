@@ -1,1 +1,0 @@
-{"rustc":5568962893999928269,"features":"[\"alloc\", \"race\"]","target":15818772897122422038,"profile":8344124108420085910,"path":5863758731031214242,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/once_cell-fe490526bc6f8006/dep-lib-once_cell"}}],"rustflags":[],"metadata":14177539708254521827,"config":2202906307356721367,"compile_kind":0}
