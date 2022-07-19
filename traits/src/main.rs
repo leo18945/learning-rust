@@ -1,6 +1,7 @@
 pub mod leotest;
 
-use std::fmt::{Display, Formatter};
+use std::fmt::{Debug, Display, Formatter};
+use std::mem::size_of_val;
 use crate::leotest::practise_trait_1::model1::{To_String, User};
 
 //参考 generics/src/main.rs
@@ -69,18 +70,21 @@ fn main() {
 
     println!("\n//21.From ~ Into 精简代码实例");
     test21();
+
+    println!("\n//22.Drop Trait");
+    test22();
 }
 
 fn test1() {
     pub trait GetInfo {
         fn get_name(&self) -> &String;
-        fn get_age(&self)  -> u32;
+        fn get_age(&self) -> u32;
     }
 
     #[derive(Debug)]
     pub struct Student {
-        name : String,
-        age  : u32,
+        name: String,
+        age: u32,
     }
 
     impl GetInfo for Student {
@@ -93,15 +97,14 @@ fn test1() {
         }
     }
 
-    let s = Student{name: "leo".to_string(), age: 28};
+    let s = Student { name: "leo".to_string(), age: 28 };
     println!("s->{:#?}", s);
     println!("s.name->{}", s.get_name());
     println!("s.age->{}", s.get_age());
-
 }
 
 fn test2() {
-    let leo = User {id: 101, name: "leo".to_string()};
+    let leo = User { id: 101, name: "leo".to_string() };
     println!("{}", leo.to_string());
 }
 
@@ -111,32 +114,32 @@ fn test3() {
     fn print_info(item: impl To_String) {
         println!("{}", item.to_string());
     }
-    let leo = User {id: 101, name: "leo".to_string()};
+    let leo = User { id: 101, name: "leo".to_string() };
     print_info(leo);
 
     // 2.类型约束的第二种写法: trait bound 写法
     fn print_info_2<T: To_String>(item: T) {
         println!("{}", item.to_string());
     }
-    let leo = User {id: 101, name: "leo".to_string()};
+    let leo = User { id: 101, name: "leo".to_string() };
     print_info_2(leo);
 
     // 3.类型约束的第三种写法: where 写法
     fn print_info_3<T>(item: T)
-    where T: To_String
+        where T: To_String
     // where T: To_String + Copy
     {
         println!("{}", item.to_string());
     }
-    let leo = User {id: 101, name: "leo".to_string()};
+    let leo = User { id: 101, name: "leo".to_string() };
     print_info_3(leo);
 }
 
 //4.默认实现：可以在定义 trait 时提供默认行为，trait的类型可以使用默认的行为
 fn test4() {
     struct User {
-        id   : u32,
-        name : String,
+        id: u32,
+        name: String,
     }
 
     trait Version {
@@ -148,9 +151,9 @@ fn test4() {
 
     impl Version for User {}
 
-    let jacky = User{
-        id   : 101,
-        name : "jacky".to_string(),
+    let jacky = User {
+        id: 101,
+        name: "jacky".to_string(),
     };
 
     println!("User version->{}", jacky.version());
@@ -197,8 +200,8 @@ fn test52() {
 
 fn test6() {
     struct User {
-        id   : u32,
-        name : String,
+        id: u32,
+        name: String,
     }
 
     trait Version {
@@ -213,8 +216,8 @@ fn test6() {
     // 函数返回值使用 trait 限定
     fn get_version() -> impl Version {
         let jacky = User {
-            id   : 101,
-            name : "jacky".to_string(),
+            id: 101,
+            name: "jacky".to_string(),
         };
         jacky
     }
@@ -226,27 +229,27 @@ fn test6() {
 fn test7() {
     #[derive(Debug)]
     struct Student {
-        name : String,
-        pub age  : u32,
+        name: String,
+        pub age: u32,
     }
 
     #[derive(Debug)]
     struct Teacher {
-        name : String,
-        pub age  : u32,
+        name: String,
+        pub age: u32,
     }
 
     trait GetAge {
         fn get_age(&self) -> u32;
     }
 
-    impl GetAge for Student{
+    impl GetAge for Student {
         fn get_age(&self) -> u32 {
             self.age
         }
     }
 
-    impl GetAge for Teacher{
+    impl GetAge for Teacher {
         fn get_age(&self) -> u32 {
             self.age
         }
@@ -256,7 +259,7 @@ fn test7() {
         if t {
             Student {
                 name: "Jacky".to_string(),
-                age : 18,
+                age: 18,
             }
         } else {
 
@@ -270,7 +273,7 @@ fn test7() {
 
             Student {
                 name: "Jacky".to_string(),
-                age : 18,
+                age: 18,
             }
         }
     }
@@ -306,8 +309,8 @@ fn test9() {
     }
 
     struct PeopleMatchInfo<M, S> {
-        teacher : M,
-        student : S,
+        teacher: M,
+        student: S,
     }
 
     impl<M: GetName + GetAge, S: GetName + GetAge> PeopleMatchInfo<M, S> {
@@ -321,8 +324,8 @@ fn test9() {
     }
 
     struct Teacher {
-        name : String,
-        age  : u32,
+        name: String,
+        age: u32,
     }
 
     impl GetName for Teacher {
@@ -338,8 +341,8 @@ fn test9() {
     }
 
     struct Student {
-        name : String,
-        age  : u32,
+        name: String,
+        age: u32,
     }
 
     impl GetName for Student {
@@ -355,16 +358,16 @@ fn test9() {
     }
 
     let teacher = Teacher {
-        name : "Will".to_string(),
-        age  : 37,
+        name: "Will".to_string(),
+        age: 37,
     };
 
     let student = Student {
-        name : "Tomas".to_string(),
-        age  : 13,
+        name: "Tomas".to_string(),
+        age: 13,
     };
 
-    let p = PeopleMatchInfo{
+    let p = PeopleMatchInfo {
         teacher,
         student,
     };
@@ -391,8 +394,8 @@ fn test10() {
     }
 
     struct Student {
-        name : String,
-        age  : u32,
+        name: String,
+        age: u32,
     }
 
     // Student 实现了 GetName trait
@@ -404,8 +407,8 @@ fn test10() {
     }
 
     let mia = Student {
-        name : "Mia".to_string(),
-        age  : 28,
+        name: "Mia".to_string(),
+        age: 28,
     };
 
     mia.print_name();
@@ -451,7 +454,7 @@ fn test11() {
     }
 
     struct A {
-        value : i32,
+        value: i32,
     }
 
     impl Iterator1<i32> for A {
@@ -480,7 +483,7 @@ fn test11() {
         }
     }
 
-    let mut a = A { value : 4 };
+    let mut a = A { value: 4 };
     // let res1 = a.next(); // 这种类型不能自省
     let res2: Option<i32> = a.next(); // 这种也可以调用
     println!("res2={}", res2.unwrap());
@@ -502,7 +505,6 @@ fn test11() {
 // trait 的实现者会针对特定的实现在这个类型的位置指定相应的具体类型
 // 如此可以定义一个使用多种类型的 trait
 fn test12() {
-
     //==============以下开始用关联类型实现==================//
     pub trait Iterator2 {
         type Output;
@@ -510,7 +512,7 @@ fn test12() {
     }
 
     struct A {
-        value : i32,
+        value: i32,
     }
 
     impl Iterator2 for A {
@@ -527,10 +529,9 @@ fn test12() {
         }
     }
 
-    let mut a = A { value : 4 };
+    let mut a = A { value: 4 };
     let res1 = a.next(); // 这种类型不能自省
     println!("res1={}", res1.unwrap());
-
 }
 
 //完全限定语法
@@ -563,18 +564,18 @@ fn test13() {
         }
     }
 
-    let t = MyType{};
+    let t = MyType {};
     t.print();
     MyType::print(&t);
 
     //=============================//
-    let t = MyType{};
+    let t = MyType {};
     <MyType as A>::print(&t);
     //以下为上面的等价效果
     A::print(&t);
 
     //=============================//
-    let t = MyType{};
+    let t = MyType {};
     <MyType as B>::print(&t);
     //以下为上面的等价效果
     B::print(&t);
@@ -650,8 +651,8 @@ fn test18() {
         println!("s1 & s2 are not equals!")
     }
 
-    let v1 = vec![1,2,3,4,5];
-    let v2 = vec![1,2,3,4,5];
+    let v1 = vec![1, 2, 3, 4, 5];
+    let v2 = vec![1, 2, 3, 4, 5];
     if v1 == v2 {
         println!("v1 & v2 are equals!")
     } else {
@@ -680,35 +681,39 @@ fn test19() {
 // https://zhuanlan.zhihu.com/p/392826855
 fn test20() {
     #[derive(Debug)]
-    struct Point { x: i32, y: i32 };
+    struct Point {
+        x: i32,
+        y: i32,
+    }
+    ;
 
     impl From<(i32, i32)> for Point {
-        fn from( (x, y): (i32, i32) ) -> Self {
+        fn from((x, y): (i32, i32)) -> Self {
             Point { x, y }
         }
     }
 
     impl From<Point> for (i32, i32) {
-        fn from(Point{x, y}: Point) -> Self {
+        fn from(Point { x, y }: Point) -> Self {
             (x, y)
         }
     }
 
     impl From<[i32; 2]> for Point {
-        fn from( [x, y]: [i32; 2] ) -> Self {
+        fn from([x, y]: [i32; 2]) -> Self {
             Point { x, y }
         }
     }
 
     impl From<Point> for [i32; 2] {
-        fn from(Point{x, y}: Point) -> Self {
+        fn from(Point { x, y }: Point) -> Self {
             [x, y]
         }
     }
 
     //=============================//
     // Point 原始构造
-    let p1 = Point {x: 102, y: 147 };
+    let p1 = Point { x: 102, y: 147 };
     println!("p1={:?}", p1);
 
     //=============================//
@@ -745,12 +750,12 @@ fn test20() {
 // From ~ Into 实例
 // https://zhuanlan.zhihu.com/p/392826855
 fn test21() {
-
     #[derive(Debug)]
     struct Point {
         x: i32,
-        y: i32
-    };
+        y: i32,
+    }
+    ;
 
     impl Point {
         fn new(x: i32, y: i32) -> Point {
@@ -768,8 +773,9 @@ fn test21() {
     struct Triangle {
         p1: Point,
         p2: Point,
-        p3: Point
-    };
+        p3: Point,
+    }
+    ;
 
     impl Triangle {
         fn new(p1: Point, p2: Point, p3: Point) -> Triangle {
@@ -823,3 +829,84 @@ fn test21() {
     ].into();
     println!("Triangle={:?}", t);
 }
+
+// Drop 实现
+// https://blog.csdn.net/weixin_44691608/article/details/121319407
+fn test22() {
+    #[derive(Debug)]
+    struct Point(i32, i32);
+
+    #[derive(Debug)]
+    struct Rectangle {
+        top_left: Point,
+        bottom_right: Point,
+    }
+
+    fn drop_resource<T: Debug>(item: &mut T) {
+        println!("\t=== [release resource] {:?}, free: {} bytes", item, size_of_val(item));
+    }
+
+    impl Drop for Point {
+        // 以下代码会调用 drop trait
+        // /usr/local/Cellar/rust/1.62.0/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:486
+        // pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)
+        // https://juejin.cn/post/7062613016831295501#heading-2
+        fn drop(&mut self) {
+            drop_resource(self);
+        }
+    }
+
+    impl Drop for Rectangle {
+        fn drop(&mut self) {
+            drop_resource(self);
+        }
+    }
+
+    fn test_1() {
+        let p1 = Point(101, 127);
+        println!("p1={:?}", p1);
+        let p1 = Point(101, 127);
+        println!("p1={:?}", p1);
+    }
+    test_1();
+
+    println!("\n//test_2=====================");
+    fn test_2() {
+        {
+            let p1 = Point(195, 206);
+            println!("p1={:?}", p1);
+        }
+        let p1 = Point(147, 226);
+        println!("p1={:?}", p1);
+    }
+    test_2();
+
+    println!("\n//test_3=====================");
+    fn test_3() {
+        let rect = Rectangle {
+            top_left: Point(1, 1),
+            bottom_right: Point(2, 2),
+        };
+        println!("rect = {:?}", rect);
+
+        let box_rect = Box::new(Rectangle {
+            top_left: Point(3, 3),
+            bottom_right: Point(4, 4),
+        });
+        println!("box_rect = {:?}", box_rect);
+    }
+    test_3();
+
+    println!("\n//test_4=====================");
+    fn test_4() {
+        let p1 = Point(101, 127);
+        println!("p1={:?}", p1);
+        drop(p1);
+        let p1 = Point(101, 127);
+        println!("p1={:?}", p1);
+    }
+    test_4();
+}
+
+// Rust源码组织结构
+// https://www.cnblogs.com/mengsuenyan/p/13463834.html
