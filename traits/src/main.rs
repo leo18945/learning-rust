@@ -1,10 +1,13 @@
 pub mod leotest;
+pub mod cells;
 
 use std::fmt::{Debug, Display, Formatter};
 use std::mem::size_of_val;
 use crate::leotest::practise_trait_1::model1::{To_String, User};
 
-//参考 generics/src/main.rs
+// https://juejin.cn/post/6844904048714317831
+
+// 参考 generics/src/main.rs
 fn main() {
     println!("\n//1.trait用于定义与其它类型共享的功能，类似于其它语言中的接口");
     println!("\n//  1)可以通过 trait 以抽象的方式定义共享的行为");

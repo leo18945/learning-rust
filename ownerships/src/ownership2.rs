@@ -1,3 +1,6 @@
+// 带你了解 Rust 中的move, copy, clone
+// https://juejin.cn/post/7046638487851761694
+
 #[test]
 pub fn main() {
     println!("\n//1.rust通过所有权机制来管理内存，编译器在编译时就会根据所有权规则对内存的使用进行检查");

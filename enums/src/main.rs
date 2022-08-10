@@ -16,8 +16,15 @@ fn main() {
 
     // if let 写法
     test6();
+
+    // enum 比较
+    test7();
+
+    // enum 比较
+    test8();
 }
 
+// 枚举进化之 - 最原始的写法
 fn test1() {
     #[derive(Debug)]
     enum IPAddrKind {
@@ -38,6 +45,8 @@ fn test1() {
     println!("{:?}", ip1);
 }
 
+// 枚举进化之 - 枚举项直接包含值
+// 背后的原理就是，编译器帮忙生成了struct来包装每一个枚举项的值
 fn test2() {
     #[derive(Debug)]
     enum IPAddr {
@@ -105,3 +114,103 @@ fn test6() {
         println!("None")
     }
 }
+
+fn test7() {
+    #[derive(Debug, PartialEq)]
+    enum IPAddr {
+        V4(String),
+        V6(String),
+    }
+
+    let ip1 = IPAddr::V4(String::from("127.0.0.1"));
+    let ip2 = IPAddr::V4(String::from("127.0.0.1"));
+    let res = ip1 == ip2;
+    println!("ip1 =? ip2 -> {}", res);
+}
+
+fn test8() {
+    #[derive(PartialEq)]
+    enum Attribute {
+        Strength,
+        Agility,
+        Intellect,
+    }
+
+    #[derive(PartialEq)]
+    enum Parameter {
+        Health,
+        Mana,
+    }
+
+    #[derive(PartialEq)]
+    enum BuffTarget {
+        Attribute(Attribute),
+        Parameter(Parameter),
+    }
+
+    let type_1 = BuffTarget::Attribute(Attribute::Strength);
+    let type_2 = BuffTarget::Attribute(Attribute::Intellect);
+
+    assert_eq!((type_1 == type_2), false);
+}
+
+
+//---------------------------------------//
+/***
+1.枚举原理
+// https://www.zhihu.com/question/452956370/answer/1819873974
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    ChangeColor(i32, i32, i32),
+}
+上面的枚举会被翻译成类似这样
+struct _Message {
+    tag: int,
+    values: union {
+        struct Quit {}
+
+        struct Move {
+            int32_t x, y;
+        }
+
+        struct ChangeColor {
+            int32_t _1, _2, _3;
+        }
+    }
+}
+
+------------------------------------------
+https://www.zhihu.com/question/450752789/answer/1798867075
+enum Message {
+    Toggled(bool),
+}
+
+// 编译器自动生成如下:
+impl Message {
+    fn Toggled(_arg: bool) -> Self {
+        Message::Toggled(_arg)
+    }
+}
+
+------------------------------------------
+https://aloso.github.io/2021/03/10/rusts-universes.html
+
+struct Foo(Bar);
+
+// the compiler transforms the above into something like this:
+
+struct Foo { 0: Bar };
+
+fn Foo(_0: Bar) -> Foo {
+    Foo { 0: _0 }
+}
+
+*/
+//---------------------------------------//
+
+// struct S {
+//     a: T1,
+//     u: union { b: T2, c: T3 }
+// }
+

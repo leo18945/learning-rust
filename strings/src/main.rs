@@ -1,25 +1,33 @@
 fn main() {
     test1();
-    println!("=================");
+    println!("\n=================");
     test2();
-    println!("=================");
+    println!("\n=================");
     test3();
-    println!("=================");
+    println!("\n=================");
     test4();
-    println!("=================");
+    println!("\n=================");
     test5();
-    println!("=================");
+    println!("\n=================");
     test6();
-    println!("=================");
+    println!("\n=================");
     test7();
-    println!("====用 nth 获取 chars中单个字符=============");
+    println!("\n====用 nth 获取 chars中单个字符=============");
     test8();
-    println!("====用 chars 处理String=============");
+    println!("\n====用 chars 处理String=============");
     test9();
-    println!("====用 bytes 处理String=============");
+
+    println!("\n====用 bytes 处理String=============");
     test10();
-    println!("====String & str=============");
+
+    println!("\n====String & str=============");
     test11();
+
+    println!("\n====String & str=============");
+    test12();
+
+    println!("\n====String & str=============");
+    test13();
 }
 
 fn test1() {
@@ -153,4 +161,28 @@ fn test11() {
     let w1 = "world";
     // let s2 = h.chars();
     println!("{}", h1.len());
+}
+
+// 字符串模式匹配
+fn test12() {
+    let s = String::from("hello");
+    match &s as &str {
+        "hello" => println!("hello"),
+        _ => (),
+    }
+}
+
+// 字符串模式匹配
+fn test13() {
+    let s: &str = "dev";
+    let env = match s {
+        "d" | "dev"  | "devel" | "development" => "DEV",
+        "s" | "stag" | "staging" => "STAG",
+        "p" | "prod" | "production" => "PROD",
+        _ => "Unknown",
+    };
+    println!("{:?}", env);
+
+    let x: Option<i32> = None;
+    println!("{:?}", x);
 }

@@ -4,6 +4,9 @@ use std::io::Take;
 use regex::Regex;
 use std::ops::Add;
 
+// Rust 中的泛型
+// https://juejin.cn/post/6909067849868771342
+
 //参考 traits/src/main.rs
 fn main() {
     test1();
@@ -19,6 +22,9 @@ fn main() {
 
     println!("\n// 9.重载+号运算符, 重载时指定另一种类型，可用于两种不同类型相加");
     test9();
+
+    println!("\n// 10.泛型手动指定类型");
+    test10();
 }
 
 #[derive(PartialEq, Eq, Debug)]
@@ -258,4 +264,15 @@ fn test9() {
 
     println!("res1={:?}", res1);
     println!("res2={:?}", res2);
+}
+
+fn test10() {
+    fn foo<T>(t: T) -> T {
+        t
+    }
+    assert_eq!(foo(3), 3);
+    assert_eq!(foo("hello"), "hello");
+    // 上面两行调用与下面两行调和等价
+    assert_eq!(foo::<i32>(3), 3); // turbofish 操作符
+    assert_eq!(foo::<&'static str>("hello"), "hello");
 }

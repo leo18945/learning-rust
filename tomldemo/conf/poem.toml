@@ -1,0 +1,28 @@
+[dev]
+address = "localhost"
+port = "8000"
+workers = 4
+
+[dev.db]
+adapter = "mysql"
+db_name = "blog_dev"
+pool = 5
+
+[stag]
+address = "0.0.0.0"
+port = "9000"
+
+[stag.db]
+adapter = "mysql"
+db_name = "blog_stag"
+pool = 5
+
+[prod]
+address = "0.0.0.0"
+port = "9000"
+
+[prod.db]
+adapter = "mysql"
+db_name = "blog_prod"
+pool = 5
+

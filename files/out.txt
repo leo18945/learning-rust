@@ -1,0 +1,6 @@
+Hello Rust!
+This is my test file.
+Help me to learn operate file in rust.
+Tue, 19 Jul 2022 04:19:04 +0000
+Tue, 19 Jul 2022 04:22:33 +0000
+Tue, 19 Jul 2022 04:22:46 +0000

@@ -5,24 +5,34 @@ use ahash::{AHasher, RandomState};
 fn main() {
     println!("1.====用 String 类型做 key ========");
     test1();
+
     println!("2.====用 &String 类型做 key ========");
     test2();
+
     println!("3.====用字符串字面量类型&str做 key ========");
     test3();
+
     println!("4.====用字符串字面量类型&str做 key ========");
     test4();
+
     println!("5.====批量初始化 k->v========");
     test5();
+
     println!("6.====通过两个 vec zip 实现批量初始化 hashmap ========");
     test6();
+
     println!("7.====打印map.len & cap========");
     test7();
+
     println!("8.====通过 for (k, v) in map 遍历 map ========");
     test8();
+
     println!("9.====只在key 不存在时才插入 ========");
     test9();
+
     println!("10.====word count 实例 ========");
     test10();
+
     println!("11.====替换 hasher 函数，获得更高性能 ========");
     test11();
 }

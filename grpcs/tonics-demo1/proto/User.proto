@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package records;
+
+message RecordRequest {
+  string user_name = 1;
+  string user_age = 2;
+}
+
+message RecordResponse {
+  bool successful = 1;
+  string message = 2;
+}
+
+service Recorder {
+  rpc SendMessage(RecordRequest) returns (RecordResponse);
+}

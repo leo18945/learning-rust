@@ -35,6 +35,9 @@ fn main() {
 
     println!("\n12.用 drain_filter 指定条件-批量删除元素========================");
     test12();
+
+    println!("\n13.用 range 构建 Vec ========================");
+    test13();
 }
 
 fn test1() {
@@ -51,9 +54,10 @@ fn test2() {
 
 fn test3() {
     let mut v = vec![1, 2, 3, 4, 5];
-    match v.get(9) { // 用这种方式比较好，可以处理数组下标越界的问题
+    match v.get(9) {
+        // 用这种方式比较好，可以处理数组下标越界的问题
         Some(val) => println!("{val}"),
-        _ => println!("no value")
+        _ => println!("no value"),
     }
 }
 
@@ -78,7 +82,7 @@ fn test5() {
     v.push(8);
     v.push(9);
     for a in &v {
-        println!("{a:p}->{a}");  //a的地址都不一样，因为是a的值就是指向v[n]元素的地址
+        println!("{a:p}->{a}"); //a的地址都不一样，因为是a的值就是指向v[n]元素的地址
     }
 }
 
@@ -91,7 +95,6 @@ fn test6() {
 }
 
 fn test7() {
-
     #[derive(Debug)]
     enum Context {
         Text(String),
@@ -146,10 +149,11 @@ fn test83() {
 
     let first = &v[0];
     println!("first addr = {:p}", &first); //输出变量地址，这个地址中存储着一个指针值
-    println!("first ptr  = {:p}", first);  //输出变量值-因为是指针型变量，所以值是一个内存地址，这个地址是指向vec数组在堆上的内存首地址
+    println!("first ptr  = {:p}", first); //输出变量值-因为是指针型变量，所以值是一个内存地址，这个地址是指向vec数组在堆上的内存首地址
 
     // v.extend_from_slice(&[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
-    for i in 6..16 { //6..16是前闭后开，也就是不包括16
+    for i in 6..16 {
+        //6..16是前闭后开，也就是不包括16
         v.push(i);
     }
     println!("after push some elements");
@@ -213,4 +217,13 @@ fn test12() {
 
     println!("删除后元素->{:?}", v);
     println!("删除后地址 v prt  = {:?}", v.as_ptr()); //地址没有发生改变
+}
+
+fn test13() {
+    // 泛型函数 - turbofish 操作符
+    let v = (0..10).collect::<Vec<_>>();
+    println!("v={:?}", v);
+
+    let v = Vec::<u8>::with_capacity(16);
+    println!("v.cap={}", v.capacity());
 }

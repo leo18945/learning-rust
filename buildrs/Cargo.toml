@@ -1,0 +1,22 @@
+[package]
+name = "buildrs"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 搭建企业私有仓库
+# https://baoyachi.github.io/Rust/crates_private_alternative_registry.html
+#rand = { git = "https://github.com/rust-lang-nursery/rand", branch = "master" }
+rand = { git = "https://github.com/rust-lang-nursery/rand", tag = "0.2.1" }
+#rand = { git = "https://github.com/rust-lang-nursery/rand", rev = "e2112c4" }
+
+[dev-dependencies]
+built = "*"
+
+[build-dependencies]
+
+#[env]
+#OUT_DIR = "/Users/leo18945/math.rs"
